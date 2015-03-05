@@ -1,0 +1,54 @@
+﻿# Так-как база данных на сервере а JS на клиенте без server side языка не обойтись. Писал под MySQL DB.
+# Задание простое поэтому не вижу смысла комментировать
+
+CREATE TABLE tested_students(
+    name VARCHAR(30) NOT NULL,
+    PRIMARY KEY (name)
+) ENGINE = InnoDB;
+
+CREATE TABLE tests_conducted(
+    name VARCHAR(30) NOT NULL,
+    date DATETIME NOT NULL,
+    examples_types VARCHAR(20) NOT NULL,
+    number_of_correct INT NOT NULL,
+    number_of_incorrect INT NOT NULL,
+    test_quantity INT NOT NULL, !
+    FOREIGN KEY (name) references tested_students (name)
+    ON UPDATE CASCADE
+	ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE wrong_decisions_examples(
+	name VARCHAR(30) NOT NULL,
+	example VARCHAR(30),
+    wrong_answer TINYINT,
+    FOREIGN KEY (name) references tested_students(name)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+INSERT INTO tests_conducted (name, date, examples_types, number_of_correct, number_of_incorrect)
+VALUES (NAME_VALUE, DATE_VALUE, EXAMPLE_TYPES_VALUE, NUMBER_OF_CORRECT_VALUE, NUMBER_OF_INCORRECT_VALUE);
+
+INSERT INTO wrong_decisions_examples (name, example, wrong_answer)
+VALUES (NAME_VALUE, EXAMPLE_VALUE, WRONG_ANSWER_VALUE);
+
+UPDATE tests_conducted SET number_of_correct = number_of_correct + 1 WHERE name = NAME_VALUE;
+UPDATE tests_conducted SET number_of_incorrect = number_of_incorrect + 1 WHERE name = NAME_VALUE;
+
+SELECT (name, examples_types, number_of_correct, number_of_incorrect)FROM tests_conducted
+WHERE DATE(date) BETWEEN DATA_VALUE AND DATA_VALUE;
+
+SELECT (name)FROM tests_conducted
+WHERE test_quantity = 0 AND test_quantity = 0;
+
+SELECT (name)FROM tests_conducted
+WHERE test_quantity = 0 AND test_quantity = 0;
+
+SELECT (name)FROM tests_conducted
+WHERE test_quantity = TESTS_QUANTITY_VALUE AND DATE(date) BETWEEN DATA_VALUE AND DATA_VALUE = 0 AND (number_of_correct/(number_of_correct+number_of_incorrect))*100 < 50;
+
+SELECT * FROM tests_conducted ORDER BY date;
+SELECT * FROM tests_conducted ORDER BY date DESC;
+
+SELECT * FROM tests_conducted ORDER BY name;
